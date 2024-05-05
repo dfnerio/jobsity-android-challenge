@@ -30,18 +30,20 @@ const styles = StyleSheet.create({
     backgroundColor: 'white',
     alignItems: 'center',
     height: 100,
+    flexWrap: 'wrap',
   },
   textContainer: {
     flex: 1,
     alignSelf: 'center',
+    justifyContent: 'center',
     paddingHorizontal: 16,
     height: '100%',
-    justifyContent: 'center',
   },
   image: {
     height: '100%',
     width: 75,
     resizeMode: 'stretch',
+    backgroundColor: 'whitesmoke',
   },
   title: {
     fontSize: Theme.fontSize.title,
@@ -50,10 +52,11 @@ const styles = StyleSheet.create({
   subtitle: {
     fontSize: Theme.fontSize.subtitle,
     color: 'grey',
-    flexWrap: 'wrap',
   },
   genreList: {
     flexGrow: 0,
+    width: '100%',
+    flexWrap: 'wrap',
   },
   iconContainer: {
     flexDirection: 'row',
@@ -65,7 +68,7 @@ const styles = StyleSheet.create({
 
 interface TvShowCardProps {
   tvShow: TvShow;
-  isFavorite: boolean;
+  isFavorite?: boolean;
 }
 
 export const TvShowCard = ({ tvShow, isFavorite = false }: TvShowCardProps) => {
@@ -87,7 +90,7 @@ export const TvShowCard = ({ tvShow, isFavorite = false }: TvShowCardProps) => {
       style={[styles.container, styles.row]}
       onPress={handleOnPress}
     >
-      {tvShow.image && <Image style={styles.image} src={tvShow.image.medium} />}
+      <Image style={styles.image} src={tvShow.image && tvShow.image.medium} />
       <View style={styles.textContainer}>
         <Text style={styles.title}>{tvShow.name}</Text>
         <FlatList

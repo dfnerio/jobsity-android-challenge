@@ -1,5 +1,5 @@
 import { FlatList, StyleSheet, Text, View } from 'react-native';
-import { useRootSelector } from '../../redux/hooks';
+import { useRootSelector } from '../../../redux/hooks';
 import { getFavorites } from '../selectors/getFavorites';
 import { useCallback } from 'react';
 import { TvShow } from '../../tvShows/types/tvShow';

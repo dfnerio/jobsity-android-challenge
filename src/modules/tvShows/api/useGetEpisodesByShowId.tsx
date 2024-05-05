@@ -1,5 +1,5 @@
 import { useCallback, useEffect, useState } from 'react';
-import { Episode } from '../types/episode';
+import { Episode } from '../types/Episode';
 
 interface GetEpisodesByShowIdProps {
   showId: number;
@@ -32,7 +32,7 @@ export const useGetEpisodesByShowId = ({
   }, [getEpisodes]);
 
   return {
-    episodes,
+    data: episodes,
     loading,
     error,
   };

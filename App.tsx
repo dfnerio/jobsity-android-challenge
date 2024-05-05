@@ -1,69 +1,17 @@
 import React from 'react';
-import { TvShowsScreen } from './src/modules/tvShows/screens/TvShowsScreen';
 import { NavigationContainer } from '@react-navigation/native';
-import { createNativeStackNavigator } from '@react-navigation/native-stack';
-import { TvShowDetailsScreen } from './src/modules/tvShows/screens/TvShowDetailsScreen';
-import { EpisodeDetailsScreen } from './src/modules/tvShows/screens/EpisodeDetailsScreen';
-import {
-  FavoritesStackParams,
-  RootStackParams,
-  TvShowsStackParams,
-} from './src/navigation/types/navigationTypes';
+import { RootStackParams } from './src/navigation/types/navigationTypes';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import Icon from 'react-native-vector-icons/FontAwesome6';
-import { FavoritesScreen } from './src/modules/favorites/screens/FavoritesScreen';
 import { Provider } from 'react-redux';
-import { rootPersistor, rootStore } from './src/modules/redux/store';
+import { rootPersistor, rootStore } from './src/redux/store';
 import { PersistGate } from 'redux-persist/integration/react';
+import { TvShowsStack } from './src/navigation/stacks/TvShowsStack';
+import { FavoritesStack } from './src/navigation/stacks/FavoritesStack';
+import { PeopleStack } from './src/navigation/stacks/PeopleStack';
 
 export default function App() {
-  const TvShowsStack = createNativeStackNavigator<TvShowsStackParams>();
-  const FavoritesStack = createNativeStackNavigator<FavoritesStackParams>();
   const Tab = createBottomTabNavigator<RootStackParams>();
-
-  const TvShowsStackScreen = () => {
-    return (
-      <TvShowsStack.Navigator initialRouteName="TvShowsList">
-        <TvShowsStack.Screen
-          name="TvShowsList"
-          component={TvShowsScreen}
-          options={{
-            title: 'Tv Shows',
-          }}
-        />
-        <TvShowsStack.Screen
-          name="TvShowDetails"
-          component={TvShowDetailsScreen}
-        />
-        <TvShowsStack.Screen
-          name="EpisodeDetails"
-          component={EpisodeDetailsScreen}
-        />
-      </TvShowsStack.Navigator>
-    );
-  };
-
-  const FavoritesStackScreen = () => {
-    return (
-      <FavoritesStack.Navigator initialRouteName="FavoritesList">
-        <FavoritesStack.Screen
-          name="FavoritesList"
-          component={FavoritesScreen}
-          options={{
-            title: 'Favorites',
-          }}
-        />
-        <FavoritesStack.Screen
-          name="TvShowDetails"
-          component={TvShowDetailsScreen}
-        />
-        <FavoritesStack.Screen
-          name="EpisodeDetails"
-          component={EpisodeDetailsScreen}
-        />
-      </FavoritesStack.Navigator>
-    );
-  };
 
   return (
     <Provider store={rootStore}>
@@ -78,7 +26,7 @@ export default function App() {
           >
             <Tab.Screen
               name="TvShows"
-              component={TvShowsStackScreen}
+              component={TvShowsStack}
               options={{
                 tabBarLabel: 'Tv Shows',
                 tabBarIcon: ({ focused }) => (
@@ -90,10 +38,23 @@ export default function App() {
                 ),
               }}
             />
-
+            <Tab.Screen
+              name="People"
+              component={PeopleStack}
+              options={{
+                tabBarLabel: 'People',
+                tabBarIcon: ({ focused }) => (
+                  <Icon
+                    name="person"
+                    color={focused ? 'purple' : 'grey'}
+                    size={18}
+                  />
+                ),
+              }}
+            />
             <Tab.Screen
               name="Favorites"
-              component={FavoritesStackScreen}
+              component={FavoritesStack}
               options={{
                 tabBarLabel: 'Favorites',
                 tabBarIcon: ({ focused }) => (

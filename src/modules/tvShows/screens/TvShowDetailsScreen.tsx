@@ -1,3 +1,4 @@
+import React from 'react';
 import { useNavigation, useRoute } from '@react-navigation/native';
 import { useCallback, useEffect, useMemo } from 'react';
 import {
@@ -16,10 +17,13 @@ import { Episodes } from '../components/Episodes';
 import { htmlToMarkup } from '../utils/htmlToMarkup';
 import { Theme } from '../../../style/Theme';
 import { FavoriteButton } from '../components/FavoriteButton';
-import { useRootDispatch, useRootSelector } from '../../redux/hooks';
+import { useRootDispatch, useRootSelector } from '../../../redux/hooks';
 import { getFavorites } from '../../favorites/selectors/getFavorites';
-import { addFavorite, removeFavoriteById } from '../../redux/slices/favorites';
-import React from 'react';
+import {
+  addFavorite,
+  removeFavoriteById,
+} from '../../../redux/slices/favorites';
+import { GenreListSeparator } from '../components/GenreListSeparator';
 
 const styles = StyleSheet.create({
   container: {
@@ -97,10 +101,6 @@ export function TvShowDetailsScreen() {
     }`;
   }, [tvShow.schedule]);
 
-  const listSeparator = () => {
-    return <Text> · </Text>;
-  };
-
   return (
     <SafeAreaView>
       <ScrollView>
@@ -111,7 +111,9 @@ export function TvShowDetailsScreen() {
           <View style={styles.subContainer}>
             <View style={styles.headerContainer}>
               <Text style={styles.headline}>{tvShow.name}</Text>
-              <Text style={styles.subheader}>{airsAt}</Text>
+              {(tvShow.schedule.days.length || tvShow.schedule.time) && (
+                <Text style={styles.subheader}>{airsAt}</Text>
+              )}
               <FlatList
                 data={tvShow.genres}
                 horizontal
@@ -119,7 +121,7 @@ export function TvShowDetailsScreen() {
                 renderItem={({ item, index }) => (
                   <Text key={index}>{item}</Text>
                 )}
-                ItemSeparatorComponent={listSeparator}
+                ItemSeparatorComponent={GenreListSeparator}
               />
               <View style={styles.row}>
                 {tvShow.rating.average && (

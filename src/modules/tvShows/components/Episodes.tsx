@@ -7,7 +7,7 @@ import {
 } from 'react-native';
 import { useGetEpisodesByShowId } from '../api/useGetEpisodesByShowId';
 import { useCallback, useMemo } from 'react';
-import { Episode } from '../types/episode';
+import { Episode } from '../types/Episode';
 import { ListSeparator } from './ListSeparator';
 import Icon from 'react-native-vector-icons/FontAwesome6';
 import { NavigationProp, useNavigation } from '@react-navigation/native';
@@ -43,7 +43,7 @@ const styles = StyleSheet.create({
 
 export const Episodes = ({ showId, disableScroll = false }: EpisodesProps) => {
   const navigation: NavigationProp<TvShowsStackParams> = useNavigation();
-  const { episodes } = useGetEpisodesByShowId({
+  const { data: episodes } = useGetEpisodesByShowId({
     showId,
   });
 

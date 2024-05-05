@@ -38,7 +38,7 @@ export const useGetTvShows = ({ page = 1, query }: useGetTvShowsProps) => {
   }, [getTvShows]);
 
   return {
-    tvShows,
+    data: tvShows,
     loading,
     error,
     reloadData: getTvShows,

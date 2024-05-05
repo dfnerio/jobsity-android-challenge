@@ -1,13 +1,11 @@
 import React, { useCallback, useEffect, useMemo, useState } from 'react';
 import { Button, FlatList, StyleSheet, Text, View } from 'react-native';
-import { TvShow } from '../types/tvShow';
-import { TvShowCard } from '../components/TvShowCard';
-import { ListSeparator } from '../components/ListSeparator';
+import { useGetPeople } from '../api/useGetPeople';
 import { SafeAreaView } from 'react-native-safe-area-context';
-import { SearchBar } from '../components/SearchBar';
-import { useGetTvShows } from '../api/useGetTvShows';
-import { useRootSelector } from '../../../redux/hooks';
-import { getFavorites } from '../../favorites/selectors/getFavorites';
+import { SearchBar } from '../../tvShows/components/SearchBar';
+import { Person } from '../types/Person';
+import { PersonCard } from '../components/PersonCard';
+import { ListSeparator } from '../../tvShows/components/ListSeparator';
 
 const styles = StyleSheet.create({
   container: {
@@ -34,18 +32,10 @@ const styles = StyleSheet.create({
   },
 });
 
-export function TvShowsScreen() {
+export function PeopleScreen() {
   const [query, setQuery] = useState<string | undefined>(undefined);
   const [page, setPage] = useState(1);
-  const favorites = useRootSelector(getFavorites);
-  const {
-    data: tvShows,
-    loading,
-    reloadData,
-  } = useGetTvShows({
-    page,
-    query,
-  });
+  const { data: people, loading, reloadData } = useGetPeople({ query, page });
 
   useEffect(() => {
     reloadData();
@@ -59,11 +49,8 @@ export function TvShowsScreen() {
   );
 
   const renderItem = useCallback(
-    ({ item }: { item: TvShow }) => {
-      const isFavorite = !!favorites.find(favorite => favorite.id === item.id);
-      return <TvShowCard tvShow={item} key={item.id} isFavorite={isFavorite} />;
-    },
-    [favorites],
+    ({ item }: { item: Person }) => <PersonCard person={item} key={item.id} />,
+    [],
   );
 
   const isPageButtonDisabled = useMemo(() => {
@@ -82,7 +69,7 @@ export function TvShowsScreen() {
     <SafeAreaView style={styles.container}>
       <SearchBar onChange={setQuery} />
       <FlatList
-        data={tvShows}
+        data={people}
         renderItem={renderItem}
         ItemSeparatorComponent={ListSeparator}
       />
