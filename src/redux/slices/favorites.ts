@@ -15,6 +15,7 @@ export const favoritesSlice = createSlice({
   reducers: {
     add: (state, action: PayloadAction<TvShow>) => {
       state.value.push(action.payload);
+      state.value.sort((a, b) => a.name.localeCompare(b.name));
     },
     remove: (state, action: PayloadAction<number>) => {
       state.value = state.value.filter(

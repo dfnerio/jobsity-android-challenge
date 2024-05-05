@@ -121,11 +121,22 @@ export const EnterPinBottomSheet = ({
     } else {
       closeBottomSheet();
     }
-  }, [open, bottomSheetRef, textInputRef, closeBottomSheet, setValue]);
+  }, [
+    open,
+    bottomSheetRef,
+    textInputRef,
+    closeBottomSheet,
+    setValue,
+    isAuthorizing,
+  ]);
 
   const renderBackdrop = useCallback(
     (props: BottomSheetBackdropProps) => (
-      <BottomSheetBackdrop {...props} disappearsOnIndex={-1} />
+      <BottomSheetBackdrop
+        {...props}
+        disappearsOnIndex={-1}
+        pressBehavior={'none'}
+      />
     ),
     [],
   );
@@ -206,7 +217,6 @@ export const EnterPinBottomSheet = ({
       snapPoints={['90%']}
       backdropComponent={renderBackdrop}
       enablePanDownToClose={!isAuthorizing}
-      enableDismissOnClose={!isAuthorizing}
       onDismiss={onClose}
     >
       <BottomSheetView style={styles.container}>
@@ -216,6 +226,7 @@ export const EnterPinBottomSheet = ({
           <TextInput
             ref={textInputRef}
             placeholder="****"
+            placeholderTextColor={'lightgrey'}
             style={styles.textInput}
             keyboardType="number-pad"
             onChange={event => handleOnChangeValue(event.nativeEvent.text)}

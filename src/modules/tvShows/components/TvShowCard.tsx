@@ -49,8 +49,8 @@ const styles = StyleSheet.create({
     fontSize: Theme.fontSize.title,
     color: 'black',
   },
-  subtitle: {
-    fontSize: Theme.fontSize.subtitle,
+  caption: {
+    fontSize: Theme.fontSize.caption,
     color: 'grey',
   },
   genreList: {
@@ -99,7 +99,7 @@ export const TvShowCard = ({ tvShow, isFavorite = false }: TvShowCardProps) => {
           horizontal
           style={styles.genreList}
           renderItem={({ item, index }) => (
-            <Text style={styles.subtitle} key={index}>
+            <Text style={styles.caption} key={index}>
               {item}
             </Text>
           )}
