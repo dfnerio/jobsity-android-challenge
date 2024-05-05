@@ -1,5 +1,4 @@
 import {
-  Dimensions,
   FlatList,
   Image,
   StyleSheet,
@@ -9,9 +8,18 @@ import {
 } from 'react-native';
 import { TvShow } from '../types/tvShow';
 import Icon from 'react-native-vector-icons/FontAwesome6';
-import { useNavigation } from '@react-navigation/native';
+import {
+  CompositeNavigationProp,
+  useNavigation,
+} from '@react-navigation/native';
 import { useCallback } from 'react';
 import { Theme } from '../../../style/Theme';
+import {
+  FavoritesStackParams,
+  TvShowsStackParams,
+} from '../../../navigation/types/navigationTypes';
+import React from 'react';
+import { NativeStackNavigationProp } from '@react-navigation/native-stack';
 
 const styles = StyleSheet.create({
   row: {
@@ -47,21 +55,32 @@ const styles = StyleSheet.create({
   genreList: {
     flexGrow: 0,
   },
-  chevronIcon: {
-    padding: 16,
+  iconContainer: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    padding: Theme.spacing.pad,
+    gap: Theme.spacing.pad2,
   },
 });
 
 interface TvShowCardProps {
   tvShow: TvShow;
+  isFavorite: boolean;
 }
 
-export const TvShowCard = ({ tvShow }: TvShowCardProps) => {
-  const navigation = useNavigation();
+export const TvShowCard = ({ tvShow, isFavorite = false }: TvShowCardProps) => {
+  const navigation: CompositeNavigationProp<
+    NativeStackNavigationProp<TvShowsStackParams>,
+    NativeStackNavigationProp<FavoritesStackParams>
+  > = useNavigation();
 
   const handleOnPress = useCallback(() => {
     navigation.navigate('TvShowDetails', { tvShow });
   }, [navigation, tvShow]);
+
+  const listSeparator = () => {
+    return <Text> · </Text>;
+  };
 
   return (
     <TouchableOpacity
@@ -80,10 +99,13 @@ export const TvShowCard = ({ tvShow }: TvShowCardProps) => {
               {item}
             </Text>
           )}
-          ItemSeparatorComponent={() => <Text> · </Text>}
+          ItemSeparatorComponent={listSeparator}
         />
       </View>
-      <Icon name="chevron-right" size={18} style={styles.chevronIcon} />
+      <View style={styles.iconContainer}>
+        {isFavorite && <Icon name="star" size={18} solid />}
+        <Icon name="chevron-right" size={18} />
+      </View>
     </TouchableOpacity>
   );
 };

@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useCallback, useEffect, useState } from 'react';
 import { Episode } from '../types/episode';
 
 interface GetEpisodesByShowIdProps {
@@ -12,24 +12,24 @@ export const useGetEpisodesByShowId = ({
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(false);
 
-  const getEpisodes = async () => {
+  const getEpisodes = useCallback(async () => {
     try {
       const response = await fetch(
         `https://api.tvmaze.com/shows/${showId}/episodes`,
       );
       const json = await response.json();
       setEpisodes(json);
-    } catch (error) {
-      console.error(error);
+    } catch (err) {
+      console.error(err);
       setError(true);
     } finally {
       setLoading(false);
     }
-  };
+  }, [showId]);
 
   useEffect(() => {
     getEpisodes();
-  }, []);
+  }, [getEpisodes]);
 
   return {
     episodes,

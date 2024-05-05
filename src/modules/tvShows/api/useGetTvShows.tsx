@@ -1,5 +1,4 @@
-import { useEffect, useState } from 'react';
-import { Episode } from '../types/episode';
+import { useCallback, useEffect, useState } from 'react';
 import { TvShow } from '../types/tvShow';
 
 interface useGetTvShowsProps {
@@ -12,7 +11,7 @@ export const useGetTvShows = ({ page = 1, query }: useGetTvShowsProps) => {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(false);
 
-  const getTvShows = async () => {
+  const getTvShows = useCallback(async () => {
     try {
       setLoading(true);
       setError(false);
@@ -26,17 +25,17 @@ export const useGetTvShows = ({ page = 1, query }: useGetTvShowsProps) => {
         json = json.map((item: { show: TvShow }) => item.show);
       }
       setTvShows(json);
-    } catch (error) {
-      console.error(error);
+    } catch (err) {
+      console.error(err);
       setError(true);
     } finally {
       setLoading(false);
     }
-  };
+  }, [page, query]);
 
   useEffect(() => {
     getTvShows();
-  }, []);
+  }, [getTvShows]);
 
   return {
     tvShows,

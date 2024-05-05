@@ -10,8 +10,10 @@ import { useCallback, useMemo } from 'react';
 import { Episode } from '../types/episode';
 import { ListSeparator } from './ListSeparator';
 import Icon from 'react-native-vector-icons/FontAwesome6';
-import { useNavigation } from '@react-navigation/native';
+import { NavigationProp, useNavigation } from '@react-navigation/native';
 import { Theme } from '../../../style/Theme';
+import { TvShowsStackParams } from '../../../navigation/types/navigationTypes';
+import React from 'react';
 
 interface EpisodesProps {
   showId: number;
@@ -40,8 +42,8 @@ const styles = StyleSheet.create({
 });
 
 export const Episodes = ({ showId, disableScroll = false }: EpisodesProps) => {
-  const navigation = useNavigation();
-  const { episodes, loading, error } = useGetEpisodesByShowId({
+  const navigation: NavigationProp<TvShowsStackParams> = useNavigation();
+  const { episodes } = useGetEpisodesByShowId({
     showId,
   });
 
@@ -76,7 +78,7 @@ export const Episodes = ({ showId, disableScroll = false }: EpisodesProps) => {
         </TouchableOpacity>
       );
     },
-    [],
+    [handleOnEpisodePress],
   );
 
   const renderSectionHeader = useCallback(

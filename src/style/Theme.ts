@@ -4,7 +4,8 @@ export const Theme = {
     headline2: 22,
     subheader: 20,
     title: 18,
-    subtitle: 14,
+    subtitle: 16,
+    caption: 14,
   },
   spacing: {
     pad: 16,

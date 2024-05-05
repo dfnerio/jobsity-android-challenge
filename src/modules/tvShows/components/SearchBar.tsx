@@ -1,11 +1,8 @@
+import React from 'react';
 import { StyleSheet, TextInput, View } from 'react-native';
 import Icon from 'react-native-vector-icons/FontAwesome6';
 
 const styles = StyleSheet.create({
-  container: {
-    padding: 6,
-    backgroundColor: '#EEE',
-  },
   textInput: {
     fontSize: 16,
     marginLeft: 8,
@@ -17,8 +14,9 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     alignItems: 'center',
     paddingHorizontal: 16,
-    borderRadius: 10,
     width: '100%',
+    borderBottomWidth: 1,
+    borderBottomColor: 'whitesmoke',
   },
 });
 
@@ -28,15 +26,14 @@ interface SearchBarProps {
 
 export const SearchBar = ({ onChange }: SearchBarProps) => {
   return (
-    <View style={styles.container}>
-      <View style={styles.searchBar}>
-        <Icon name="magnifying-glass" />
-        <TextInput
-          placeholder="Search"
-          style={styles.textInput}
-          onChange={event => onChange(event.nativeEvent.text)}
-        />
-      </View>
+    <View style={styles.searchBar}>
+      <Icon name="magnifying-glass" size={16} />
+      <TextInput
+        placeholder="Search"
+        placeholderTextColor={'lightgrey'}
+        style={styles.textInput}
+        onChange={event => onChange(event.nativeEvent.text)}
+      />
     </View>
   );
 };

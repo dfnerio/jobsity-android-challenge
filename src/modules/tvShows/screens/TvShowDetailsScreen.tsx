@@ -1,5 +1,5 @@
 import { useNavigation, useRoute } from '@react-navigation/native';
-import { useEffect, useMemo } from 'react';
+import { useCallback, useEffect, useMemo } from 'react';
 import {
   FlatList,
   Image,
@@ -9,12 +9,17 @@ import {
   Text,
   View,
 } from 'react-native';
-import { RootStackScreenProps } from '../../../navigation/types/navigationTypes';
+import { TvShowsStackScreenProps } from '../../../navigation/types/navigationTypes';
 import Markdown from 'react-native-markdown-display';
 import Icon from 'react-native-vector-icons/FontAwesome6';
 import { Episodes } from '../components/Episodes';
 import { htmlToMarkup } from '../utils/htmlToMarkup';
 import { Theme } from '../../../style/Theme';
+import { FavoriteButton } from '../components/FavoriteButton';
+import { useRootDispatch, useRootSelector } from '../../redux/hooks';
+import { getFavorites } from '../../favorites/selectors/getFavorites';
+import { addFavorite, removeFavoriteById } from '../../redux/slices/favorites';
+import React from 'react';
 
 const styles = StyleSheet.create({
   container: {
@@ -61,25 +66,40 @@ const styles = StyleSheet.create({
 });
 
 export function TvShowDetailsScreen() {
+  const dispatch = useRootDispatch();
   const navigation = useNavigation();
-  const route = useRoute<RootStackScreenProps<'TvShowDetails'>['route']>();
+  const route = useRoute<TvShowsStackScreenProps<'TvShowDetails'>['route']>();
+  const favorites = useRootSelector(getFavorites);
+
   const { tvShow } = route.params;
 
+  const isFavorite = useMemo(() => {
+    return !!favorites.find(favorite => favorite.id === tvShow.id);
+  }, [favorites, tvShow]);
+
+  const handleOnPressFavorite = useCallback(() => {
+    dispatch(isFavorite ? removeFavoriteById(tvShow.id) : addFavorite(tvShow));
+  }, [dispatch, isFavorite, tvShow]);
+
   useEffect(() => {
-    navigation.setOptions({ title: tvShow.name });
-  }, [navigation, tvShow]);
+    navigation.setOptions({
+      title: tvShow.name,
+      headerRight: () => (
+        <FavoriteButton selected={isFavorite} onPress={handleOnPressFavorite} />
+      ),
+    });
+  }, [navigation, tvShow, isFavorite, handleOnPressFavorite]);
 
   const airsAt = useMemo(() => {
     const { time, days } = tvShow.schedule;
-    return (
-      'Airs ' +
-      days.map((day, index) => {
-        return (index ? ' ' : '') + day;
-      }) +
-      ' at ' +
-      time
-    );
+    return `Airs${days && days.map(day => ' ' + day + 's')}${
+      time && ' at ' + time
+    }`;
   }, [tvShow.schedule]);
+
+  const listSeparator = () => {
+    return <Text> · </Text>;
+  };
 
   return (
     <SafeAreaView>
@@ -99,7 +119,7 @@ export function TvShowDetailsScreen() {
                 renderItem={({ item, index }) => (
                   <Text key={index}>{item}</Text>
                 )}
-                ItemSeparatorComponent={() => <Text> · </Text>}
+                ItemSeparatorComponent={listSeparator}
               />
               <View style={styles.row}>
                 {tvShow.rating.average && (

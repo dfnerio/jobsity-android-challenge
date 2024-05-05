@@ -1,19 +1,13 @@
 import React, { useCallback, useEffect, useMemo, useState } from 'react';
-import {
-  Button,
-  FlatList,
-  ScrollView,
-  StyleSheet,
-  Text,
-  View,
-} from 'react-native';
+import { Button, FlatList, StyleSheet, Text, View } from 'react-native';
 import { TvShow } from '../types/tvShow';
 import { TvShowCard } from '../components/TvShowCard';
-import { MOCK_TV_SHOWS } from '../testData/mockTvShowList';
 import { ListSeparator } from '../components/ListSeparator';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { SearchBar } from '../components/SearchBar';
 import { useGetTvShows } from '../api/useGetTvShows';
+import { useRootSelector } from '../../redux/hooks';
+import { getFavorites } from '../../favorites/selectors/getFavorites';
 
 const styles = StyleSheet.create({
   container: {
@@ -34,20 +28,24 @@ const styles = StyleSheet.create({
     justifyContent: 'space-between',
     flexDirection: 'row',
     alignItems: 'center',
+    backgroundColor: 'white',
+    borderTopWidth: 1,
+    borderTopColor: 'whitesmoke',
   },
 });
 
 export function TvShowsScreen() {
   const [query, setQuery] = useState<string | undefined>(undefined);
   const [page, setPage] = useState(1);
-  const { tvShows, loading, error, reloadData } = useGetTvShows({
+  const favorites = useRootSelector(getFavorites);
+  const { tvShows, loading, reloadData } = useGetTvShows({
     page,
     query,
   });
 
   useEffect(() => {
     reloadData();
-  }, [page, query]);
+  }, [page, query, reloadData]);
 
   const handleOnChangePage = useCallback(
     (pageChange: number) => {
@@ -56,16 +54,20 @@ export function TvShowsScreen() {
     [page],
   );
 
-  const renderItem = useCallback(({ item }: { item: TvShow }) => {
-    return <TvShowCard tvShow={item} key={item.id} />;
-  }, []);
+  const renderItem = useCallback(
+    ({ item }: { item: TvShow }) => {
+      const isFavorite = !!favorites.find(favorite => favorite.id === item.id);
+      return <TvShowCard tvShow={item} key={item.id} isFavorite={isFavorite} />;
+    },
+    [favorites],
+  );
 
   const isPageButtonDisabled = useMemo(() => {
     return !!query || loading;
   }, [query, loading]);
 
   const pageText = useMemo(() => {
-    if (!!query) {
+    if (query) {
       return null;
     }
 
