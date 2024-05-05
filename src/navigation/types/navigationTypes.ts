@@ -8,6 +8,7 @@ export type RootStackParams = {
   TvShows: NavigatorScreenParams<TvShowsStackParams>;
   Favorites: NavigatorScreenParams<FavoritesStackParams>;
   People: NavigatorScreenParams<PeopleStackParams>;
+  Security: NavigatorScreenParams<AuthStackParams>;
 };
 
 export type RootStackScreenProps<T extends keyof RootStackParams> =
@@ -43,6 +44,10 @@ export type PeopleStackParams = {
   };
 };
 
+export type AuthStackParams = {
+  ManageSecurity: undefined;
+};
+
 export type TvShowsStackScreenProps<T extends keyof TvShowsStackParams> =
   NativeStackScreenProps<TvShowsStackParams, T>;
 
@@ -51,6 +56,9 @@ export type FavoritesStackScreenProps<T extends keyof FavoritesStackParams> =
 
 export type PeopleStackScreenProps<T extends keyof PeopleStackParams> =
   NativeStackScreenProps<PeopleStackParams, T>;
+
+export type AuthStackScreenProps<T extends keyof AuthStackParams> =
+  NativeStackScreenProps<AuthStackParams, T>;
 
 declare global {
   namespace ReactNavigation {

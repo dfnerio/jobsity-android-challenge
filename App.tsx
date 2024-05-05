@@ -9,65 +9,82 @@ import { PersistGate } from 'redux-persist/integration/react';
 import { TvShowsStack } from './src/navigation/stacks/TvShowsStack';
 import { FavoritesStack } from './src/navigation/stacks/FavoritesStack';
 import { PeopleStack } from './src/navigation/stacks/PeopleStack';
+import { AuthStack } from './src/navigation/stacks/AuthStack';
+import { GestureHandlerRootView } from 'react-native-gesture-handler';
+import { BottomSheetModalProvider } from '@gorhom/bottom-sheet';
+import { useRootSelector } from './src/redux/hooks';
+import { getShouldAskForAuthentication } from './src/modules/security/selectors/getShouldAskForAuthentication';
 
-export default function App() {
+function Navigator() {
+  const shouldAskForAuthorization = useRootSelector(
+    getShouldAskForAuthentication,
+  );
   const Tab = createBottomTabNavigator<RootStackParams>();
 
   return (
+    <NavigationContainer>
+      <Tab.Navigator
+        screenOptions={{
+          headerShown: false,
+          tabBarShowLabel: false,
+          tabBarInactiveBackgroundColor: 'whitesmoke',
+        }}
+        initialRouteName={shouldAskForAuthorization ? 'Security' : 'TvShows'}
+      >
+        <Tab.Screen
+          name="TvShows"
+          component={TvShowsStack}
+          options={{
+            tabBarIcon: ({ focused }) => (
+              <Icon name="tv" color={focused ? 'purple' : 'grey'} size={18} />
+            ),
+          }}
+        />
+        <Tab.Screen
+          name="People"
+          component={PeopleStack}
+          options={{
+            tabBarIcon: ({ focused }) => (
+              <Icon
+                name="person"
+                color={focused ? 'purple' : 'grey'}
+                size={18}
+              />
+            ),
+          }}
+        />
+        <Tab.Screen
+          name="Favorites"
+          component={FavoritesStack}
+          options={{
+            tabBarIcon: ({ focused }) => (
+              <Icon name="star" color={focused ? 'purple' : 'grey'} size={18} />
+            ),
+          }}
+        />
+        <Tab.Screen
+          name="Security"
+          component={AuthStack}
+          options={{
+            tabBarIcon: ({ focused }) => (
+              <Icon name="lock" color={focused ? 'purple' : 'grey'} size={18} />
+            ),
+          }}
+        />
+      </Tab.Navigator>
+    </NavigationContainer>
+  );
+}
+
+export default function App() {
+  return (
     <Provider store={rootStore}>
       <PersistGate loading={null} persistor={rootPersistor}>
-        <NavigationContainer>
-          <Tab.Navigator
-            screenOptions={{
-              headerShown: false,
-              tabBarShowLabel: false,
-              tabBarInactiveBackgroundColor: 'whitesmoke',
-            }}
-          >
-            <Tab.Screen
-              name="TvShows"
-              component={TvShowsStack}
-              options={{
-                tabBarLabel: 'Tv Shows',
-                tabBarIcon: ({ focused }) => (
-                  <Icon
-                    name="tv"
-                    color={focused ? 'purple' : 'grey'}
-                    size={18}
-                  />
-                ),
-              }}
-            />
-            <Tab.Screen
-              name="People"
-              component={PeopleStack}
-              options={{
-                tabBarLabel: 'People',
-                tabBarIcon: ({ focused }) => (
-                  <Icon
-                    name="person"
-                    color={focused ? 'purple' : 'grey'}
-                    size={18}
-                  />
-                ),
-              }}
-            />
-            <Tab.Screen
-              name="Favorites"
-              component={FavoritesStack}
-              options={{
-                tabBarLabel: 'Favorites',
-                tabBarIcon: ({ focused }) => (
-                  <Icon
-                    name="star"
-                    color={focused ? 'purple' : 'grey'}
-                    size={18}
-                  />
-                ),
-              }}
-            />
-          </Tab.Navigator>
-        </NavigationContainer>
+        <GestureHandlerRootView>
+          <BottomSheetModalProvider>
+            <Navigator />
+          </BottomSheetModalProvider>
+        </GestureHandlerRootView>
       </PersistGate>
     </Provider>
   );

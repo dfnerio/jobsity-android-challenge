@@ -1,5 +1,5 @@
 import { PayloadAction, createSlice } from '@reduxjs/toolkit';
-import { TvShow } from '../../tvShows/types/tvShow';
+import { TvShow } from '../../modules/tvShows/types/tvShow';
 
 interface FavoritesState {
   value: TvShow[];
