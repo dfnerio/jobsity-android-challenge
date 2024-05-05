@@ -89,6 +89,7 @@ export const TvShowCard = ({ tvShow, isFavorite = false }: TvShowCardProps) => {
     <TouchableOpacity
       style={[styles.container, styles.row]}
       onPress={handleOnPress}
+      testID={`tvShowCard-${tvShow.id}`}
     >
       <Image style={styles.image} src={tvShow.image && tvShow.image.medium} />
       <View style={styles.textContainer}>
@@ -106,8 +107,19 @@ export const TvShowCard = ({ tvShow, isFavorite = false }: TvShowCardProps) => {
         />
       </View>
       <View style={styles.iconContainer}>
-        {isFavorite && <Icon name="star" size={18} solid />}
-        <Icon name="chevron-right" size={18} />
+        {isFavorite && (
+          <Icon
+            name="star"
+            size={18}
+            solid
+            testID={`tvShowCard-${tvShow.id}-favorite-icon`}
+          />
+        )}
+        <Icon
+          name="chevron-right"
+          size={18}
+          testID={`tvShowCard-${tvShow.id}-chevron-icon`}
+        />
       </View>
     </TouchableOpacity>
   );

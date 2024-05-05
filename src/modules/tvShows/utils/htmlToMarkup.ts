@@ -1,9 +1,9 @@
 export const htmlToMarkup = (html: string) => {
   return html
-    .replaceAll('<b>', '**')
-    .replaceAll('</b>', '**')
-    .replaceAll('<i>', '*')
-    .replaceAll('</i>', '*')
-    .replaceAll('<p>', '')
-    .replaceAll('</p>', '');
+    .replace('<b>', '**')
+    .replace('</b>', '**')
+    .replace('<i>', '*')
+    .replace('</i>', '*')
+    .replace('<p>', '')
+    .replace('</p>', '');
 };
