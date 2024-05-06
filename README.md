@@ -25,4 +25,4 @@ Built using:
 
 ### Build
 
-The APK is already generated and available in `android/app/build/outputs/apk/debug/app-debug.apk`.
+The APK is available under the `Releases` section in this repo, marked as v1.0. 
