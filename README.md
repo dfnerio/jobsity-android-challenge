@@ -25,7 +25,7 @@ Built using:
 
 ### Build
 
-The APK is available under the `Releases` section in this repo, marked as v1.0. 
+The APK is available under the `Releases` section in this repo, marked as v1.2. 
 
 ### Notes
 
