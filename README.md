@@ -20,7 +20,7 @@ Built using:
 
 | Tv Shows | People | Favorites | PIN | 
 | -- | -- | -- | -- |
-| <img src="https://github.com/dfnerio/jobsity-android-challenge/assets/11319430/6380c661-6d0a-49db-b234-668d0c15dcf5" /> | <img src="https://github.com/dfnerio/jobsity-android-challenge/assets/11319430/a4610e5b-35a1-42a5-8efc-faf9dab93b06" /> | <img src="https://github.com/dfnerio/jobsity-android-challenge/assets/11319430/72fd9252-896c-42ce-9e99-bc7b3659213a" /> | <img src="https://github.com/dfnerio/jobsity-android-challenge/assets/11319430/ee687077-c8b2-4233-8d6f-96cf2875509c" /> |
+| <img src="https://github.com/dfnerio/jobsity-android-challenge/assets/11319430/6380c661-6d0a-49db-b234-668d0c15dcf5" /> | <img src="https://github.com/dfnerio/jobsity-android-challenge/assets/11319430/6997498f-dd4f-42ad-9b64-bfc894a88797" /> | <img src="https://github.com/dfnerio/jobsity-android-challenge/assets/11319430/72fd9252-896c-42ce-9e99-bc7b3659213a" /> | <img src="https://github.com/dfnerio/jobsity-android-challenge/assets/11319430/ee687077-c8b2-4233-8d6f-96cf2875509c" /> |
 
 
 ### Build
