@@ -30,4 +30,3 @@ The APK is available under the `Releases` section in this repo, marked as v1.0.
 ### Notes
 
 - When setting up a security PIN, you will need to enter it again when you re-open the app. The PIN persists throughout sessions, so don't forget it or you'll have to re-install.
-- Unit tests are available for some components/screens/utils under their corresponding folders. Ignore the root __tests__ folder.
