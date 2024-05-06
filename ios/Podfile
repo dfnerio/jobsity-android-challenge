@@ -14,7 +14,7 @@ if linkage != nil
   use_frameworks! :linkage => linkage.to_sym
 end
 
-target 'JobsityReactNative' do
+target 'Jobsity-RN-DiegoFrias' do
   config = use_native_modules!
 
   use_react_native!(
@@ -23,7 +23,7 @@ target 'JobsityReactNative' do
     :app_path => "#{Pod::Config.instance.installation_root}/.."
   )
 
-  target 'JobsityReactNativeTests' do
+  target 'Jobsity-RN-DiegoFriasTests' do
     inherit! :complete
     # Pods for testing
   end
