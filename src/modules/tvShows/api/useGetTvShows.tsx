@@ -1,5 +1,6 @@
 import { useCallback, useEffect, useState } from 'react';
 import { TvShow } from '../types/tvShow';
+import { API_BASE_URL } from '../../../utils/consts';
 
 interface useGetTvShowsProps {
   page?: number;
@@ -16,8 +17,8 @@ export const useGetTvShows = ({ page = 1, query }: useGetTvShowsProps) => {
       setLoading(true);
       setError(false);
       const response = query
-        ? await fetch(`https://api.tvmaze.com/search/shows?q=${query}`)
-        : await fetch(`https://api.tvmaze.com/shows?page=${page}`);
+        ? await fetch(API_BASE_URL + `/search/shows?q=${query}`)
+        : await fetch(API_BASE_URL + `/shows?page=${page}`);
 
       let json = await response.json();
 

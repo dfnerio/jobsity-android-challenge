@@ -1,5 +1,6 @@
 import { useCallback, useEffect, useState } from 'react';
 import { Person } from '../types/Person';
+import { API_BASE_URL } from '../../../utils/consts';
 
 interface useGetPeopleProps {
   page?: number;
@@ -16,8 +17,8 @@ export const useGetPeople = ({ page = 1, query }: useGetPeopleProps) => {
       setLoading(true);
       setError(false);
       const response = query
-        ? await fetch(`https://api.tvmaze.com/search/people?q=${query}`)
-        : await fetch(`https://api.tvmaze.com/people?page=${page}`);
+        ? await fetch(API_BASE_URL + `/search/people?q=${query}`)
+        : await fetch(API_BASE_URL + `/people?page=${page}`);
 
       let json = await response.json();
 

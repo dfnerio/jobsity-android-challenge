@@ -1,5 +1,6 @@
 import { useCallback, useEffect, useState } from 'react';
 import { Appearance } from '../types/Appearance';
+import { API_BASE_URL } from '../../../utils/consts';
 
 interface useGetAppearancesProps {
   personId: number;
@@ -16,7 +17,7 @@ export const useGetAppearances = ({ personId }: useGetAppearancesProps) => {
       setLoading(true);
       setError(false);
       const response = await fetch(
-        `https://api.tvmaze.com/people/${personId}/castcredits`,
+        API_BASE_URL + `/people/${personId}/castcredits`,
       );
 
       let json = await response.json();

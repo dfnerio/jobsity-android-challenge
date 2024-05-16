@@ -1,5 +1,6 @@
 import { useCallback, useEffect, useState } from 'react';
 import { Episode } from '../types/Episode';
+import { API_BASE_URL } from '../../../utils/consts';
 
 interface GetEpisodesByShowIdProps {
   showId: number;
@@ -14,9 +15,7 @@ export const useGetEpisodesByShowId = ({
 
   const getEpisodes = useCallback(async () => {
     try {
-      const response = await fetch(
-        `https://api.tvmaze.com/shows/${showId}/episodes`,
-      );
+      const response = await fetch(API_BASE_URL + `/shows/${showId}/episodes`);
       const json = await response.json();
       setEpisodes(json);
     } catch (err) {
