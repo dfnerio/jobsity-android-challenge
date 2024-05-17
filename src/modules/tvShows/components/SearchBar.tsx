@@ -1,6 +1,13 @@
 import React from 'react';
-import { StyleSheet, TextInput, View } from 'react-native';
+import {
+  NativeSyntheticEvent,
+  StyleSheet,
+  TextInput,
+  TextInputChangeEventData,
+  View,
+} from 'react-native';
 import Icon from 'react-native-vector-icons/FontAwesome6';
+import { debounceEventWrapper } from '../../../utils/debounceEventWrapper';
 
 const styles = StyleSheet.create({
   textInput: {
@@ -25,6 +32,12 @@ interface SearchBarProps {
 }
 
 export const SearchBar = ({ onChange }: SearchBarProps) => {
+  const onTextChange = (
+    event: NativeSyntheticEvent<TextInputChangeEventData>,
+  ) => {
+    onChange(event.nativeEvent.text);
+  };
+
   return (
     <View style={styles.searchBar}>
       <Icon name="magnifying-glass" size={16} />
@@ -32,7 +45,7 @@ export const SearchBar = ({ onChange }: SearchBarProps) => {
         placeholder="Search"
         placeholderTextColor={'lightgrey'}
         style={styles.textInput}
-        onChange={event => onChange(event.nativeEvent.text)}
+        onChange={debounceEventWrapper(onTextChange, 300)}
       />
     </View>
   );

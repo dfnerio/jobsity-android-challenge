@@ -71,6 +71,9 @@ const styles = StyleSheet.create({
   cancelButton: {
     backgroundColor: 'grey',
   },
+  disabledButton: {
+    backgroundColor: 'lightgrey',
+  },
   buttonText: {
     color: 'white',
     fontWeight: 'bold',
@@ -243,8 +246,13 @@ export const EnterPinBottomSheet = ({
               <Text style={styles.buttonText}>CANCEL</Text>
             </TouchableOpacity>
             <TouchableOpacity
-              style={[styles.button, styles.doneButton]}
+              style={[
+                styles.button,
+                styles.doneButton,
+                ...[!value ? styles.disabledButton : null],
+              ]}
               onPress={onPressDone}
+              disabled={!value}
             >
               <Text style={styles.buttonText}>DONE</Text>
             </TouchableOpacity>
