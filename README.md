@@ -1,5 +1,19 @@
 # React Native Challenge - Diego Frías Nerio
 
+### Table of Contents
+- [Context](#context)
+- [Technical Details](#technical-details)
+  - [Architecture](#architecture)
+  - [Project structure and other details](#project-structure-and-other-details)
+- [Build](#build)
+  - [APK](#apk)
+  - [Running locally](#running-locally)
+- [Notes](#notes)
+
+| Tv Shows | People | Favorites | PIN | 
+| -- | -- | -- | -- |
+| <img width="200px" src="https://github.com/dfnerio/jobsity-android-challenge/assets/11319430/6380c661-6d0a-49db-b234-668d0c15dcf5" /> | <img width="200px" src="https://github.com/dfnerio/jobsity-android-challenge/assets/11319430/6997498f-dd4f-42ad-9b64-bfc894a88797" /> | <img width="200px" src="https://github.com/dfnerio/jobsity-android-challenge/assets/11319430/72fd9252-896c-42ce-9e99-bc7b3659213a" /> | <img width="200px" src="https://github.com/dfnerio/jobsity-android-challenge/assets/11319430/ee687077-c8b2-4233-8d6f-96cf2875509c" /> |
+
 ### Context
 This app is part of a Recat Native Android challenge for Jobsity. It's purpose is to:
 - Fetch and display a list of several TvShows (from https://www.tvmaze.com/api)
@@ -25,12 +39,6 @@ The custom search functionality integrates a custom lodash debounce wrapper to h
 The copies throughout the project live inside each component directly where needed. *This is **NOT** an ideal practice.* Usually we want to support different locales using an internationalization framework such as i18n, having copies live in their own locale file and be exclusively accessed through their keys rather than their values, but this fell out of scope for this project. 
 
 Contained style sheets live inside the components they're being used on to prevent having unecessary exports, but they all share common values through a general *Theme* object to maintain consistency.
-
-### Features
-
-| Tv Shows | People | Favorites | PIN | 
-| -- | -- | -- | -- |
-| <img src="https://github.com/dfnerio/jobsity-android-challenge/assets/11319430/6380c661-6d0a-49db-b234-668d0c15dcf5" /> | <img src="https://github.com/dfnerio/jobsity-android-challenge/assets/11319430/6997498f-dd4f-42ad-9b64-bfc894a88797" /> | <img src="https://github.com/dfnerio/jobsity-android-challenge/assets/11319430/72fd9252-896c-42ce-9e99-bc7b3659213a" /> | <img src="https://github.com/dfnerio/jobsity-android-challenge/assets/11319430/ee687077-c8b2-4233-8d6f-96cf2875509c" /> |
 
 ### Build
 
